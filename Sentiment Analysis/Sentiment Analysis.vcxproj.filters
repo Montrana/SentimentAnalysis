@@ -27,4 +27,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="sentiment.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="negWords.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="posWords.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="allWords.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

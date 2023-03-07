@@ -133,6 +133,12 @@
   <ItemGroup>
     <ClInclude Include="Sentiment.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="allWords.txt" />
+    <Text Include="negWords.txt" />
+    <Text Include="posWords.txt" />
+    <Text Include="sentiment.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

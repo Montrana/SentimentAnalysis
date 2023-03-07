@@ -5,7 +5,15 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    map<string, double> negWords;
+    map<string, double> allWords;
+    map<string, double> posWords;
+
+    readFile("sentiment.txt", allWords, posWords, negWords);
+
+    printMap("allWords.txt", allWords); 
+    printMap("posWords.txt", posWords);
+    printMap("negWords.txt", negWords);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
