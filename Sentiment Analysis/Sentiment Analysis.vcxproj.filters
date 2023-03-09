@@ -29,16 +29,28 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="sentiment.txt">
-      <Filter>Source Files</Filter>
-    </Text>
-    <Text Include="negWords.txt">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
     </Text>
     <Text Include="posWords.txt">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="negWords.txt">
+      <Filter>Resource Files</Filter>
     </Text>
     <Text Include="allWords.txt">
-      <Filter>Source Files</Filter>
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="review1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="neutralRev.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="posRev.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="negRev.txt">
+      <Filter>Resource Files</Filter>
     </Text>
   </ItemGroup>
 </Project>

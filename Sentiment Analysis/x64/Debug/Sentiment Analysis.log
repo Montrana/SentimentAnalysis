@@ -1,3 +1,4 @@
 ﻿  sentiment.cpp
-C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\sentiment.cpp(24,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\sentiment.cpp(23,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\sentiment.cpp(54,31): warning C4390: ';': empty controlled statement found; is this the intent?
   Sentiment Analysis.vcxproj -> C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\x64\Debug\Sentiment Analysis.exe

@@ -135,8 +135,12 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="allWords.txt" />
+    <Text Include="negRev.txt" />
     <Text Include="negWords.txt" />
+    <Text Include="neutralRev.txt" />
+    <Text Include="posRev.txt" />
     <Text Include="posWords.txt" />
+    <Text Include="review1.txt" />
     <Text Include="sentiment.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

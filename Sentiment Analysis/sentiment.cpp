@@ -1,4 +1,3 @@
-#pragma once
 #include "Sentiment.h"
 
 bool isValid(string str)
@@ -37,7 +36,7 @@ void readFile(string filename, map<string, double>& allWords, map<string, double
     inFile.close();
 }
 
-void readFile(string filename, queue<wordData>& neutralWords,
+void readReview(string filename, queue<wordData>& neutralWords,
     queue<wordData>& posWords, queue<wordData>& negWords, map<string, double>const& dictionary) {
     ifstream inFile;
     inFile.open(filename);
@@ -47,21 +46,25 @@ void readFile(string filename, queue<wordData>& neutralWords,
         return;
     }
     string inStr;
+    
     int wordNumber = 0;
+    bool isCapitalized = false;
     while (inFile >> inStr)
     {
-        string tempWord;
-        for (int i = 0; i < inStr.length(); i++)
+        if (isupper(inStr[0]));
         {
-            tempWord[i] = tolower(inStr[i]);
+            isCapitalized = true;
+            inStr[0] = tolower(inStr[0]);
         }
-        if (!ispunct(inStr[inStr.length() - 1]))
+        if (!ispunct(inStr.back()))
         {
-            pushWord(neutralWords, posWords, negWords, inStr, dictionary.find(tempWord)->second, "", wordNumber);
+            pushWord(neutralWords, posWords, negWords, inStr, findValue(inStr, dictionary), "", wordNumber, isCapitalized);
         }
         else
         {
-            //need to take out last character of string then run that if statement again
+            string punctuation(1, inStr[inStr.length() - 1]); //https://www.geeksforgeeks.org/how-to-convert-a-single-character-to-string-in-cpp/
+            inStr.pop_back();
+            pushWord(neutralWords, posWords, negWords, inStr, findValue(inStr, dictionary), punctuation, wordNumber, isCapitalized);
         }
         wordNumber++;
     }
@@ -69,12 +72,13 @@ void readFile(string filename, queue<wordData>& neutralWords,
 
 void pushWord(queue<wordData>& neutralWords,
     queue<wordData>& posWords, queue<wordData>& negWords,
-    string wordStr, double wordVal, string punctuation, int order) {
+    string wordStr, double wordVal, string punctuation, int order, bool isCapitalized) {
     wordData tempWord;
     tempWord.word = wordStr;
     tempWord.value = wordVal;
     tempWord.wordOrder = order;
     tempWord.punctuationAfter = "";
+    tempWord.isCapitalized = isCapitalized;
     if (tempWord.value > 1.5)
     {
         posWords.push(tempWord);
@@ -89,6 +93,19 @@ void pushWord(queue<wordData>& neutralWords,
     }
 }
 
+double findValue(string word, map<string, double>const& dictionary)
+{
+    map<string, double>::const_iterator reference = dictionary.find(word);
+    if (reference != dictionary.end())
+    {
+        return reference->second;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
 void printMap(string filename, map<string, double> wordMap)
 {
     ofstream fout;
@@ -97,5 +114,18 @@ void printMap(string filename, map<string, double> wordMap)
     for (pair<string, double> word : wordMap)
     {
         fout << word.first << ": " << word.second << endl;
+    }
+}
+
+void printQueue(string filename, queue<wordData> words)
+{
+    ofstream fout;
+    fout.open(filename);
+
+    while (!words.empty())
+    {
+        wordData dataWord = words.front();
+        fout << dataWord.word << ": " << dataWord.value << endl;
+        words.pop();
     }
 }

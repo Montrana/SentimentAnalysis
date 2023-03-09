@@ -14,8 +14,11 @@ int main()
     queue<wordData> negReviewWords;
 
     readFile("sentiment.txt", allWords, posWords, negWords);
-    readFile("somefile.txt", neutralReviewWords, posReviewWords, negReviewWords, allWords);
+    readReview("review1.txt", neutralReviewWords, posReviewWords, negReviewWords, allWords);
 
+    printQueue("neutralRev.txt", neutralReviewWords);
+    printQueue("posRev.txt", posReviewWords);
+    printQueue("negRev.txt", negReviewWords);
     printMap("allWords.txt", allWords); 
     printMap("posWords.txt", posWords);
     printMap("negWords.txt", negWords);
