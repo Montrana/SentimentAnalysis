@@ -9,7 +9,12 @@ int main()
     map<string, double> allWords;
     map<string, double> posWords;
 
+    queue<wordData> neutralReviewWords;
+    queue<wordData> posReviewWords;
+    queue<wordData> negReviewWords;
+
     readFile("sentiment.txt", allWords, posWords, negWords);
+    readFile("somefile.txt", neutralReviewWords, posReviewWords, negReviewWords, allWords);
 
     printMap("allWords.txt", allWords); 
     printMap("posWords.txt", posWords);
