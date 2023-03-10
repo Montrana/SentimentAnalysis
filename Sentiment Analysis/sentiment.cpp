@@ -1,4 +1,5 @@
 #include "Sentiment.h"
+#include "WordData.h"
 
 bool isValid(string str)
 {
@@ -51,21 +52,24 @@ void readReview(string filename, queue<wordData>& neutralWords,
     bool isCapitalized = false;
     while (inFile >> inStr)
     {
-        if (isupper(inStr[0]));
+        if (isupper(inStr[0]))
         {
             isCapitalized = true;
             inStr[0] = tolower(inStr[0]);
         }
         if (!ispunct(inStr.back()))
         {
-            pushWord(neutralWords, posWords, negWords, inStr, findValue(inStr, dictionary), "", wordNumber, isCapitalized);
+            pushWord(neutralWords, posWords, negWords, inStr, 
+                findValue(inStr, dictionary), "", wordNumber, isCapitalized);
         }
         else
         {
             string punctuation(1, inStr[inStr.length() - 1]); //https://www.geeksforgeeks.org/how-to-convert-a-single-character-to-string-in-cpp/
             inStr.pop_back();
-            pushWord(neutralWords, posWords, negWords, inStr, findValue(inStr, dictionary), punctuation, wordNumber, isCapitalized);
+            pushWord(neutralWords, posWords, negWords, inStr, 
+                findValue(inStr, dictionary), punctuation, wordNumber, isCapitalized);
         }
+        isCapitalized = false;
         wordNumber++;
     }
 }
@@ -77,7 +81,7 @@ void pushWord(queue<wordData>& neutralWords,
     tempWord.word = wordStr;
     tempWord.value = wordVal;
     tempWord.wordOrder = order;
-    tempWord.punctuationAfter = "";
+    tempWord.punctuationAfter = punctuation;
     tempWord.isCapitalized = isCapitalized;
     if (tempWord.value > 1.5)
     {
@@ -117,15 +121,71 @@ void printMap(string filename, map<string, double> wordMap)
     }
 }
 
-void printQueue(string filename, queue<wordData> words)
+void printQueue(queue<wordData> words)
 {
-    ofstream fout;
-    fout.open(filename);
-
     while (!words.empty())
     {
         wordData dataWord = words.front();
-        fout << dataWord.word << ": " << dataWord.value << endl;
+        cout << dataWord.word << ": " << dataWord.value << endl;
         words.pop();
+        //dataWord.print();
     }
+}
+void printAdjustedReview(queue<wordData> posWords, queue<wordData> negWords, queue<wordData> neutralWords)
+{
+    int wordIteration = 0;
+    wordData posWord, negWord, neutralWord;
+    if (!posWords.empty())
+    {
+        posWord = posWords.front();
+    }
+    if (!negWords.empty())
+    {
+        negWord = negWords.front();
+    }
+    if (!neutralWords.empty())
+    {
+        neutralWord = neutralWords.front();
+    }
+    while (!posWords.empty() || !negWords.empty() || !neutralWords.empty())
+    {
+        if (posWord.wordOrder == wordIteration)
+        {
+            if (posWord.isCapitalized) {
+                posWord.word[0] = toupper(posWord.word[0]);
+            }
+            cout << posWord.word << posWord.punctuationAfter << " ";
+            posWords.pop();
+            if (!posWords.empty())
+            {
+                posWord = posWords.front();
+            }
+        }
+        else if (negWord.wordOrder == wordIteration)
+        {
+            if (negWord.isCapitalized) {
+                negWord.word[0] = toupper(negWord.word[0]);
+            }
+            cout << negWord.word << negWord.punctuationAfter << " ";
+            negWords.pop();
+            if (!negWords.empty())
+            {
+                negWord = negWords.front();
+            }
+        }
+        else if (neutralWord.wordOrder == wordIteration)
+        {
+            if (neutralWord.isCapitalized) {
+                neutralWord.word[0] = toupper(neutralWord.word[0]);
+            }
+            cout << neutralWord.word << neutralWord.punctuationAfter << " ";
+            neutralWords.pop();
+            if (!neutralWords.empty())
+            {
+                neutralWord = neutralWords.front();
+            }
+        }
+        wordIteration++;
+    }
+    cout << endl;
 }

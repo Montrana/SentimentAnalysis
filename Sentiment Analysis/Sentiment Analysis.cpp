@@ -2,6 +2,8 @@
 //
 
 #include "Sentiment.h"
+#include "WordData.h"
+
 
 int main()
 {
@@ -16,9 +18,11 @@ int main()
     readFile("sentiment.txt", allWords, posWords, negWords);
     readReview("review1.txt", neutralReviewWords, posReviewWords, negReviewWords, allWords);
 
-    printQueue("neutralRev.txt", neutralReviewWords);
-    printQueue("posRev.txt", posReviewWords);
-    printQueue("negRev.txt", negReviewWords);
+    printQueue(neutralReviewWords);
+    printQueue(posReviewWords);
+    printQueue(negReviewWords);
+    cout << endl;
+    printAdjustedReview(posReviewWords, negReviewWords, neutralReviewWords);
     printMap("allWords.txt", allWords); 
     printMap("posWords.txt", posWords);
     printMap("negWords.txt", negWords);

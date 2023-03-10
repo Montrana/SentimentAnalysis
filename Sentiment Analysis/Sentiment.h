@@ -5,14 +5,16 @@
 #include <fstream>
 #include <map>
 #include <queue>
+#include <limits>
+#include "WordData.h"
 using namespace std;
 
 struct wordData {
 	string word;
 	string punctuationAfter;
 	double value = 0.0;
-	int wordOrder = 0;
-	bool isCapitalized;
+	int wordOrder = INT_MAX;
+	bool isCapitalized = false;
 };
 
 void readFile(string filename, map<string, double>& allWords, map<string, double>& posWords,
@@ -25,4 +27,5 @@ void pushWord(queue<wordData>& neutralWords,
 double findValue(string word, map<string, double>const& dictionary);
 bool isValid(string str);
 void printMap(string filename, map<string, double> wordMap);
-void printQueue(string filename, queue<wordData> words);
+void printQueue(queue<wordData> words);
+void printAdjustedReview(queue<wordData> posWords, queue<wordData> negWords, queue<wordData> neutralWords);

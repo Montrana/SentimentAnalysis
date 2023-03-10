@@ -1,2 +1,0 @@
-delicious: 2.2
-wonderful: 2.76
