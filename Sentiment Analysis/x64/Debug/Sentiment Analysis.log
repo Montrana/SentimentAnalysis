@@ -1,7 +1,8 @@
 ﻿  sentiment.cpp
-C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\sentiment.cpp(26,37): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\sentiment.cpp(41,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\sentiment.cpp(133,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\sentiment.cpp(241,60): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\sentiment.cpp(22): warning C4715: 'getFile': not all control paths return a value
+C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\sentiment.cpp(36,37): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\sentiment.cpp(58,35): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\sentiment.cpp(184,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\sentiment.cpp(286,60): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\sentiment.cpp(306,60): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\sentiment.cpp(27): warning C4715: 'getFile': not all control paths return a value
   Sentiment Analysis.vcxproj -> C:\Users\nmnsd\source\repos\KC_CS201\SentimentAnalysis\Sentiment Analysis\x64\Debug\Sentiment Analysis.exe

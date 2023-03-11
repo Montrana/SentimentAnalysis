@@ -1,79 +1,91 @@
-// Sentiment Analysis.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+// Sentiment Analysis.cpp : This program takes a review from a file as input, 
+// changes it to be more positive or negative, then outputs the new review into a new file.
+// Name: Montana Nicholson
+// Date: 3/5/2023
 
 #include "Sentiment.h"
-#include "WordData.h"
 
-
+/// <summary>
+/// main has most of the function calls and macro program logic
+/// </summary>
+/// <returns>an int that isn't used</returns>
 int main()
 {
+    // https://cplusplus.com/reference/map/map/
     map<string, double> negWords;
     map<string, double> allWords;
     map<string, double> posWords;
-    
-    queue<wordData> neutralReviewWords;
-    queue<wordData> posReviewWords;
-    queue<wordData> negReviewWords;
 
-    ifstream inFileDic; //dictionary infile
-    ifstream inFileRev; //review infile
-    string inFileNameDic;
-    string inFileNameRev;
-    string outFileNameRev;
+    ifstream inFileDic; //dictionary input file
+    ifstream inFileRev; //review input file
+    string inFileNameDic, inFileNameRev, outFileNameRev; // the string forms of the file names that we use
     double sentimentValTot;
 
-    int maxOutputWidth = 80;
+    string continueInput; // holds user choice for if they want to run another review or not
 
-    inFileNameDic = getFile(inFileDic, "dictionary");
-    inFileNameRev = getFile(inFileRev, "review");
+    // inputing a list of words from a file into a map
+    inFileNameDic = getFile("dictionary");
+    readDictionary(inFileNameDic, allWords, posWords, negWords);
 
-    readFile(inFileNameDic, allWords, posWords, negWords);
-    sentimentValTot = readReview(inFileNameRev, neutralReviewWords, posReviewWords, negReviewWords, allWords);
-    cout << "The original text is:\n";
-    printReview(writeNewReview(posReviewWords, negReviewWords, neutralReviewWords), maxOutputWidth);
-    cout << "The original sentiment of this file is: " << sentimentValTot << endl << endl;
+    do // larger loop of the majority of the program.
+    { // If user wants to read another file, the loop will continue.
+        // https://cplusplus.com/reference/queue/queue/
+        queue<wordData> neutralReviewWords;
+        queue<wordData> posReviewWords;
+        queue<wordData> negReviewWords;
 
-    string input;
-    cout << "What would you like to do?\n\n";
-    cout << "P - Change from Negative to Positive\n";
-    cout << "N - Change from Positive to Negative\n";
-    cout << "Q - to Quit\n";
-    cout << "Choice: ";
+        inFileNameRev = getFile("review");
 
-    cin >> input;
-    if (input == "P")
-    {
-        sentimentValTot += changeQueue(negReviewWords, posWords);
-    }
-    else if (input == "N")
-    {
-        sentimentValTot += changeQueue(posReviewWords, negWords);
-    }
-    outFileNameRev = findOutputFile(inFileNameRev);
-    printReview(writeNewReview(posReviewWords, negReviewWords, neutralReviewWords), maxOutputWidth);
-    cout << "New Sentiment Value = " << sentimentValTot;
-    cout << "The new output file will be stored in: " << outFileNameRev;
-    
-    //printQueue(neutralReviewWords);
-    //printQueue(posReviewWords);
-    //printQueue(negReviewWords);
-    cout << endl;
-    
-    //printMap("allWords.txt", allWords); 
-    //printMap("posWords.txt", posWords);
-    //printMap("negWords.txt", negWords);
+        sentimentValTot = readReview(inFileNameRev, neutralReviewWords, posReviewWords, negReviewWords, allWords);
+        cout << "The original text is:\n";
+        printReview(writeNewReview(posReviewWords, negReviewWords, neutralReviewWords));
+        cout << "The original sentiment of this file is: " << sentimentValTot << endl << endl;
 
-    inFileDic.close();
-    inFileRev.close();
+        string posOrNegInput;
+        do // Loops until user gives a valid choice
+        {
+            cout << "What would you like to do?\n\n";
+            cout << "P - Change from Negative to Positive\n";
+            cout << "N - Change from Positive to Negative\n";
+            cout << "Q - to Quit\n";
+            cout << "Choice: ";
+            cin >> posOrNegInput;
+            posOrNegInput[0] = toupper(posOrNegInput[0]);
+            
+            if (posOrNegInput[0] == 'P')
+            {
+                cout << "Okay! I will edit file: " << inFileNameRev << " to be more positive!\n";
+                cout << endl;
+                sentimentValTot += changeQueue(negReviewWords, posWords);
+            }
+            else if (posOrNegInput[0] == 'N')
+            {
+                cout << "Okay! I will edit file: " << inFileNameRev << " to be more negative!\n";
+                cout << endl;
+                sentimentValTot += changeQueue(posReviewWords, negWords);
+            }
+            else if (posOrNegInput[0] == 'Q')
+            {
+                return 0;
+            }
+            else {
+                cout << "Please enter a valid input.\n";
+            }
+        } while (posOrNegInput[0] != 'P' && posOrNegInput[0] != 'N');
+
+        cout << endl;
+        outFileNameRev = findOutputFile(inFileNameRev);
+        printReview(outFileNameRev,
+            writeNewReview(posReviewWords, negReviewWords, neutralReviewWords),
+            sentimentValTot);
+        cout << endl;
+        cout << "The new output file will be stored in: " << outFileNameRev << endl;
+
+        cout << endl;
+
+        cout << "Would you like to go again? (Y or N): ";
+        cin >> continueInput;
+        continueInput[0] = toupper(continueInput[0]);
+
+    } while (continueInput[0] == 'Y');
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file

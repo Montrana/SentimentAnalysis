@@ -129,11 +129,9 @@
   <ItemGroup>
     <ClCompile Include="Sentiment Analysis.cpp" />
     <ClCompile Include="sentiment.cpp" />
-    <ClCompile Include="WordData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Sentiment.h" />
-    <ClInclude Include="WordData.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="allWords.txt" />
