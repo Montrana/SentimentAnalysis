@@ -3266,6 +3266,7 @@ louder,-0.62
 loudly,-0.3
 louis,0.21
 lousy,-1.03
+loved,1.21
 loves,-1.01
 loving,2.08
 low,0.17
@@ -3690,7 +3691,7 @@ nod,1.14
 nodded,0.32
 nods,0.19
 noise,-0.89
-noisy,0.32
+noisy,-1.32
 none,-0.1
 nonetheless,-0.47
 nonexistent,-0.44
@@ -6125,7 +6126,7 @@ weekend,1.44
 weekly,0.17
 weeks,0.21
 weight,0.52
-weird,-0.32
+weird,-1.32
 welcome,2.49
 welcoming,2.41
 well,1.5

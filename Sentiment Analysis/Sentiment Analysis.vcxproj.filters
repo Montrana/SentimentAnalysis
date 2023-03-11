@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\Word containers">
+      <UniqueIdentifier>{084d2946-a0e6-45ad-b1c4-a002d368152d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Sentiment Analysis.cpp">
@@ -37,26 +40,26 @@
     <Text Include="sentiment.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="posWords.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="negWords.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
-    <Text Include="allWords.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="review1.txt">
       <Filter>Resource Files</Filter>
     </Text>
-    <Text Include="neutralRev.txt">
-      <Filter>Resource Files</Filter>
+    <Text Include="posWords.txt">
+      <Filter>Resource Files\Word containers</Filter>
     </Text>
     <Text Include="posRev.txt">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Word containers</Filter>
+    </Text>
+    <Text Include="neutralRev.txt">
+      <Filter>Resource Files\Word containers</Filter>
+    </Text>
+    <Text Include="negWords.txt">
+      <Filter>Resource Files\Word containers</Filter>
     </Text>
     <Text Include="negRev.txt">
-      <Filter>Resource Files</Filter>
+      <Filter>Resource Files\Word containers</Filter>
+    </Text>
+    <Text Include="allWords.txt">
+      <Filter>Resource Files\Word containers</Filter>
     </Text>
   </ItemGroup>
 </Project>

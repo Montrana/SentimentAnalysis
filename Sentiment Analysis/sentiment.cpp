@@ -1,24 +1,41 @@
 #include "Sentiment.h"
 #include "WordData.h"
 
-bool isValid(string str)
+string getFile(ifstream& inFile, string inputType)
 {
-    return str.find_first_not_of("01234567890.-") == string::npos;
+    string filename;
+    do
+    {
+        cout << "Please enter the input file you would like to use for the " << inputType << ": ";
+        cin >> filename;
+        inFile.open(filename);
+        if (!inFile.is_open())
+        {
+            cout << "Unable to open file, please enter a valid file name.\n";
+        }
+        else
+        {
+            return filename;
+        }
+    } while (!inFile.is_open());
+
+}
+
+string findOutputFile(string inFile)
+{
+    int posPeriod = inFile.find(".");
+    string str1 = inFile.substr(0, posPeriod);
+    string str2 = inFile.substr(posPeriod);
+    return str1 + "Output" + str2;
 }
 
 void readFile(string filename, map<string, double>& allWords, map<string, double>& posWords,
     map<string, double>& negWords)
 {
-    ifstream inFile;
-    inFile.open(filename);
-    if (!inFile.is_open())
-    {
-        cout << "Unable to open file \n";
-        return;
-    }
     string inStr, tempWord;
     double tempValue;
     int commaPos;
+    ifstream inFile(filename);
     while (inFile >> inStr)
     {
         commaPos = inStr.find(',');
@@ -37,19 +54,15 @@ void readFile(string filename, map<string, double>& allWords, map<string, double
     inFile.close();
 }
 
-void readReview(string filename, queue<wordData>& neutralWords,
+double readReview(string filename, queue<wordData>& neutralWords,
     queue<wordData>& posWords, queue<wordData>& negWords, map<string, double>const& dictionary) {
-    ifstream inFile;
-    inFile.open(filename);
-    if (!inFile.is_open())
-    {
-        cout << "Unable to open file \n";
-        return;
-    }
+    
     string inStr;
     
     int wordNumber = 0;
+    double totalSentimentVal = 0;
     bool isCapitalized = false;
+    ifstream inFile(filename);
     while (inFile >> inStr)
     {
         if (isupper(inStr[0]))
@@ -59,19 +72,24 @@ void readReview(string filename, queue<wordData>& neutralWords,
         }
         if (!ispunct(inStr.back()))
         {
+            double wordVal = findValue(inStr, dictionary);
+            totalSentimentVal += wordVal;
             pushWord(neutralWords, posWords, negWords, inStr, 
-                findValue(inStr, dictionary), "", wordNumber, isCapitalized);
+                wordVal, "", wordNumber, isCapitalized);
         }
         else
         {
             string punctuation(1, inStr[inStr.length() - 1]); //https://www.geeksforgeeks.org/how-to-convert-a-single-character-to-string-in-cpp/
             inStr.pop_back();
+            double wordVal = findValue(inStr, dictionary);
+            totalSentimentVal += wordVal;
             pushWord(neutralWords, posWords, negWords, inStr, 
-                findValue(inStr, dictionary), punctuation, wordNumber, isCapitalized);
+                wordVal, punctuation, wordNumber, isCapitalized);
         }
         isCapitalized = false;
         wordNumber++;
     }
+    return totalSentimentVal;
 }
 
 void pushWord(queue<wordData>& neutralWords,
@@ -110,6 +128,27 @@ double findValue(string word, map<string, double>const& dictionary)
     }
 }
 
+double changeQueue(queue<wordData>& words, map<string, double>const& dictionary)
+{
+    srand(time(0));
+    queue<wordData> tempWords;
+    double sentimentChange = 0;
+    while (!words.empty())
+    {
+        wordData word = words.front();
+        map<string, double>::const_iterator randWord = dictionary.begin();
+        advance(randWord, rand() % dictionary.size()); //https://stackoverflow.com/questions/15425442/retrieve-random-key-element-for-stdmap-in-c
+        cout << word.word << ": " << word.value << " | " << randWord->first << ": " << randWord->second << endl;
+        word.word = randWord->first;
+        word.value = randWord->second;
+        sentimentChange += word.value;
+        tempWords.push(word);
+        words.pop();
+    }
+    words = tempWords;
+    return sentimentChange;
+}
+
 void printMap(string filename, map<string, double> wordMap)
 {
     ofstream fout;
@@ -119,6 +158,7 @@ void printMap(string filename, map<string, double> wordMap)
     {
         fout << word.first << ": " << word.second << endl;
     }
+    fout.close();
 }
 
 void printQueue(queue<wordData> words)
@@ -131,10 +171,12 @@ void printQueue(queue<wordData> words)
         //dataWord.print();
     }
 }
-void printAdjustedReview(queue<wordData> posWords, queue<wordData> negWords, queue<wordData> neutralWords)
+string writeNewReview(queue<wordData> posWords, queue<wordData> negWords, queue<wordData> neutralWords)
 {
     int wordIteration = 0;
     wordData posWord, negWord, neutralWord;
+
+    string outputText = "";
     if (!posWords.empty())
     {
         posWord = posWords.front();
@@ -154,7 +196,7 @@ void printAdjustedReview(queue<wordData> posWords, queue<wordData> negWords, que
             if (posWord.isCapitalized) {
                 posWord.word[0] = toupper(posWord.word[0]);
             }
-            cout << posWord.word << posWord.punctuationAfter << " ";
+            outputText += posWord.word + posWord.punctuationAfter + " ";
             posWords.pop();
             if (!posWords.empty())
             {
@@ -166,7 +208,7 @@ void printAdjustedReview(queue<wordData> posWords, queue<wordData> negWords, que
             if (negWord.isCapitalized) {
                 negWord.word[0] = toupper(negWord.word[0]);
             }
-            cout << negWord.word << negWord.punctuationAfter << " ";
+            outputText += negWord.word + negWord.punctuationAfter + " ";
             negWords.pop();
             if (!negWords.empty())
             {
@@ -178,7 +220,7 @@ void printAdjustedReview(queue<wordData> posWords, queue<wordData> negWords, que
             if (neutralWord.isCapitalized) {
                 neutralWord.word[0] = toupper(neutralWord.word[0]);
             }
-            cout << neutralWord.word << neutralWord.punctuationAfter << " ";
+            outputText += neutralWord.word + neutralWord.punctuationAfter + " ";
             neutralWords.pop();
             if (!neutralWords.empty())
             {
@@ -187,5 +229,18 @@ void printAdjustedReview(queue<wordData> posWords, queue<wordData> negWords, que
         }
         wordIteration++;
     }
-    cout << endl;
+    
+    return outputText;
+}
+
+void printReview(string text, int maxWidth)
+{
+    while (text.length() > maxWidth)
+    {
+        string textToSearch = text.substr(0, maxWidth);
+        int lastWhitespace = textToSearch.find_last_of(" ");
+        cout << text.substr(0, lastWhitespace) << endl;
+        text = text.substr(lastWhitespace + 1);
+    }
+    cout << text << endl;
 }

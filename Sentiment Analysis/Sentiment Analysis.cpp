@@ -10,22 +10,61 @@ int main()
     map<string, double> negWords;
     map<string, double> allWords;
     map<string, double> posWords;
-
+    
     queue<wordData> neutralReviewWords;
     queue<wordData> posReviewWords;
     queue<wordData> negReviewWords;
 
-    readFile("sentiment.txt", allWords, posWords, negWords);
-    readReview("review1.txt", neutralReviewWords, posReviewWords, negReviewWords, allWords);
+    ifstream inFileDic; //dictionary infile
+    ifstream inFileRev; //review infile
+    string inFileNameDic;
+    string inFileNameRev;
+    string outFileNameRev;
+    double sentimentValTot;
 
-    printQueue(neutralReviewWords);
-    printQueue(posReviewWords);
-    printQueue(negReviewWords);
+    int maxOutputWidth = 80;
+
+    inFileNameDic = getFile(inFileDic, "dictionary");
+    inFileNameRev = getFile(inFileRev, "review");
+
+    readFile(inFileNameDic, allWords, posWords, negWords);
+    sentimentValTot = readReview(inFileNameRev, neutralReviewWords, posReviewWords, negReviewWords, allWords);
+    cout << "The original text is:\n";
+    printReview(writeNewReview(posReviewWords, negReviewWords, neutralReviewWords), maxOutputWidth);
+    cout << "The original sentiment of this file is: " << sentimentValTot << endl << endl;
+
+    string input;
+    cout << "What would you like to do?\n\n";
+    cout << "P - Change from Negative to Positive\n";
+    cout << "N - Change from Positive to Negative\n";
+    cout << "Q - to Quit\n";
+    cout << "Choice: ";
+
+    cin >> input;
+    if (input == "P")
+    {
+        sentimentValTot += changeQueue(negReviewWords, posWords);
+    }
+    else if (input == "N")
+    {
+        sentimentValTot += changeQueue(posReviewWords, negWords);
+    }
+    outFileNameRev = findOutputFile(inFileNameRev);
+    printReview(writeNewReview(posReviewWords, negReviewWords, neutralReviewWords), maxOutputWidth);
+    cout << "New Sentiment Value = " << sentimentValTot;
+    cout << "The new output file will be stored in: " << outFileNameRev;
+    
+    //printQueue(neutralReviewWords);
+    //printQueue(posReviewWords);
+    //printQueue(negReviewWords);
     cout << endl;
-    printAdjustedReview(posReviewWords, negReviewWords, neutralReviewWords);
-    printMap("allWords.txt", allWords); 
-    printMap("posWords.txt", posWords);
-    printMap("negWords.txt", negWords);
+    
+    //printMap("allWords.txt", allWords); 
+    //printMap("posWords.txt", posWords);
+    //printMap("negWords.txt", negWords);
+
+    inFileDic.close();
+    inFileRev.close();
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
