@@ -12,9 +12,7 @@
 int main()
 {
     // https://cplusplus.com/reference/map/map/
-    map<string, double> negWords;
-    map<string, double> allWords;
-    map<string, double> posWords;
+    map<string, double> allWords, negWords, posWords;
 
     ifstream inFileDic; //dictionary input file
     ifstream inFileRev; //review input file
@@ -30,9 +28,7 @@ int main()
     do // larger loop of the majority of the program.
     { // If user wants to read another file, the loop will continue.
         // https://cplusplus.com/reference/queue/queue/
-        queue<wordData> neutralReviewWords;
-        queue<wordData> posReviewWords;
-        queue<wordData> negReviewWords;
+        queue<wordData> neutralReviewWords, posReviewWords, negReviewWords;
 
         inFileNameRev = getFile("review");
 

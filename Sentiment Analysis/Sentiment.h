@@ -20,8 +20,8 @@ struct wordData {
 	bool isCapitalized = false;
 };
 
-const double dicThreshold = 1.5; // +/- this value is what is checked if the dictionary words are positive, negative, or neutral.
-const double revThreshold = 1; // +/- this value is what is checked if the review words are positive, negative, or neutral.
+const double DIC_THRESHOLD = 1.5; // +/- this value is what is checked if the dictionary words are positive, negative, or neutral.
+const double REV_THRESHOLD = 1; // +/- this value is what is checked if the review words are positive, negative, or neutral.
 const int MAX_OUTPUT_WIDTH = 80; //The max character width of any output to be outputted to cout or a file
 
 /// <summary>

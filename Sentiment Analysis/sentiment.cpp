@@ -1,10 +1,10 @@
 #include "Sentiment.h"
 
 /// <summary>
-/// gets input from a user to chose a file, will loop until valid file is found
+/// gets input from a user to choose a file, will loop until valid file is found
 /// </summary>
 /// <param name="inputType">used to output if we're wanting the file for the map or the review</param>
-/// <returns>string of the name of the file the user chose</returns>
+/// <returns>string of the name of the file the user choose</returns>
 string getFile(string inputType)
 {
     string filename;
@@ -42,7 +42,7 @@ string findOutputFile(string inFile)
 /// <summary>
 /// reads in the dictionary file
 /// </summary>
-/// <param name="filename">the file name of the dictonary</param>
+/// <param name="filename">the file name of the dictionary</param>
 /// <param name="allWords">all of the words that are in the dictionary</param>
 /// <param name="posWords">the positive words of the dictionary</param>
 /// <param name="negWords">the negative words of the dictionary</param>
@@ -59,11 +59,11 @@ void readDictionary(string filename, map<string, double>& allWords, map<string, 
         tempWord = inStr.substr(0, commaPos);
         tempValue = stod(inStr.substr(commaPos + 1));
         allWords.insert(pair<string, double> (tempWord, tempValue));
-        if (tempValue > dicThreshold)
+        if (tempValue > DIC_THRESHOLD)
         {
             posWords.insert(pair<string, double>(tempWord, tempValue));
         }
-        else if (tempValue < -dicThreshold)
+        else if (tempValue < -DIC_THRESHOLD)
         {
             negWords.insert(pair<string, double>(tempWord, tempValue));
         }
@@ -139,11 +139,11 @@ void pushWord(queue<wordData>& neutralWords,
     tempWord.wordOrder = order;
     tempWord.punctuationAfter = punctuation;
     tempWord.isCapitalized = isCapitalized;
-    if (tempWord.value > revThreshold)
+    if (tempWord.value > REV_THRESHOLD)
     {
         posWords.push(tempWord);
     }
-    else if (tempWord.value < -revThreshold)
+    else if (tempWord.value < -REV_THRESHOLD)
     {
         negWords.push(tempWord);
     }
