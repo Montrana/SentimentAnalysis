@@ -72,7 +72,7 @@ void readDictionary(string filename, map<string, double>& allWords, map<string, 
 }
 
 /// <summary>
-/// reads the input review and stores in into the appropriate files
+/// reads the input review and stores in into the appropriate queues
 /// </summary>
 /// <param name="filename">the filename of the input review</param>
 /// <param name="neutralWords">the neutral words of the review</param>
@@ -81,8 +81,8 @@ void readDictionary(string filename, map<string, double>& allWords, map<string, 
 /// <param name="dictionary">the dictionary we reference to get the sentiment value for each word</param>
 /// <returns>the total sentiment value of the review</returns>
 double readReview(string filename, queue<wordData>& neutralWords,
-    queue<wordData>& posWords, queue<wordData>& negWords, map<string, double>const& dictionary) {
-    
+    queue<wordData>& posWords, queue<wordData>& negWords, map<string, double>const& dictionary)
+{
     string inStr;
     
     int wordNumber = 0;
@@ -115,6 +115,7 @@ double readReview(string filename, queue<wordData>& neutralWords,
         isCapitalized = false;
         wordNumber++;
     }
+    inFile.close();
     return totalSentimentVal;
 }
 
