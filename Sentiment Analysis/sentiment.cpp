@@ -209,8 +209,8 @@ double changeQueue(queue<wordData>& words, map<string, double>const& dictionary)
 /// <summary>
 /// formats the new review into a single output string
 /// </summary>
-/// <param name="posWords">the queue of positive words, if it hasn't been changed</param>
-/// <param name="negWords">the queue of negative words, if it hasn't been changed</param>
+/// <param name="posWords">the queue of positive words, if it hasn't been changed due to changeQueue</param>
+/// <param name="negWords">the queue of negative words, if it hasn't been changed due to changeQueue</param>
 /// <param name="neutralWords">the queue of neutral words</param>
 /// <returns>the review as an output string</returns>
 string writeNewReview(queue<wordData> posWords, queue<wordData> negWords, queue<wordData> neutralWords)
@@ -271,7 +271,6 @@ string writeNewReview(queue<wordData> posWords, queue<wordData> negWords, queue<
         }
         wordIteration++;
     }
-    
     return outputText;
 }
 
